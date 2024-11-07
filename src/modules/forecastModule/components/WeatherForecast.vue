@@ -12,5 +12,5 @@ interface Props {
 const forecastStore  = useForecastStore()
 const props = defineProps<Props>();
 
-forecastStore.getTodayWeatherForecast({lat:"55.796289", lon: "49.108795"})
+console.log(await forecastStore.getWeatherForecast("Kazan"))
 </script>

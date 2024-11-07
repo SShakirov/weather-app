@@ -1,54 +1,61 @@
-import _ from "lodash";
-import { defineStore } from "pinia";
-import { ref } from "vue";
+import _ from 'lodash'
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
-import type { ICoordinates, IWeatherParams } from "@/modules/forecastModule/store/types";
+import type { ICurrentForecast, ICurrentResponse, IForecastDay, IHistoryResponse, IWeatherResponse } from '@/modules/forecastModule/store/types'
 
-import { baseUrls } from "@/shared/api";
-import { serializeFromObjectToQueryString } from "@/shared/helpers/serialize";
-import useRequest from "@/shared/hooks/requestHook";
-
+import { baseUrls } from '@/shared/api'
+import { getLastWeekDates } from '@/shared/helpers/format'
+import { serializeFromObjectToQueryString } from '@/shared/helpers/serialize'
+import useRequest from '@/shared/hooks/requestHook'
 
 const urls = {
-  forecast: '/v2/forecast',
+  forecast: '/v1/current.json',
+  history: '/v1/history.json'
 }
 
 const requests = useRequest()
 
-export const useForecastStore = defineStore("forecast", () => {
-  const isLoading = ref(false);
+export const useForecastStore = defineStore('forecast', () => {
+  const isLoading = ref(false)
 
-  async function getWeatherForecast(params: IWeatherParams ):Promise<any[]>{
-    isLoading.value = true;
-    const url = baseUrls.weather + urls.forecast + "?" + serializeFromObjectToQueryString(params);
-    const response = await requests.get(url)
-    isLoading.value = false;
-    return response.tasks;
-  }
-
-  async function getTodayWeatherForecast(coordinates: ICoordinates): Promise<any[]>{
+  async function getWeatherForecast(city: string): Promise<ICurrentForecast> {
+    isLoading.value = true
     const params = {
-      ...coordinates,
-      limit: 1,
-      extra: true,
+      q: city
     }
-    return await getWeatherForecast(params)
-  }
-  async function getLastWeekWeatherForecast(coordinates: ICoordinates): Promise<any[]>{
-    const params = {
-      ...coordinates,
-      limit: 7,
-      extra: true,
-    }
-    return await getWeatherForecast(params)
+    const url = baseUrls.weather + urls.forecast + '?' + serializeFromObjectToQueryString(params)
+    const response: ICurrentResponse = await requests.get(url)
+    isLoading.value = false
+    return response.current
   }
 
+  async function getWeatherHistory(city: string): Promise<IForecastDay[]> {
+    isLoading.value = true
+    const responses: IHistoryResponse[] = []
+    const dates = getLastWeekDates()
+    const promises = dates.map((date) => {
+      const params = {
+        q: city,
+        dt: date
+      }
+      const url = baseUrls.weather + urls.history + '?' + serializeFromObjectToQueryString(params)
+      return requests.get(url).then((response) => responses.push(response))
+    })
 
+    try {
+      await Promise.all(promises)
+    } catch (e) {
+      console.error(e)
+    }
+
+    isLoading.value = false
+    return responses.map((response) => response.forecast.forecastday[0])
+  }
 
   return {
     isLoading,
-    getTodayWeatherForecast,
-    getLastWeekWeatherForecast,
+    getWeatherForecast,
+    getWeatherHistory
   }
-
 })
