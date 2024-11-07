@@ -1,0 +1,62 @@
+
+
+
+.multiselect-transparent {
+  .multiselect-field-wrapper.multiselect {
+    cursor: default;
+  }
+}
+.multiselect {
+  min-height: 32px;
+  background-color: #1E1E1E;
+  border-color: #1E1E1E !important;
+  color: orange;
+
+  & * {
+    font-size: 14px !important;
+    font-weight: 600;
+  }
+
+
+
+  .multiselect-tags-search-wrapper {
+    max-width: 100%;
+  }
+
+  & .multiselect-dropdown {
+    
+  background-color: #1E1E1E;
+  border-color: #1E1E1E !important;
+  border: 1px solid orange;
+  overflow-y: auto;
+
+  .multiselect-option{
+    &.is-selected{
+      background: orange !important;
+    }
+
+    &.is-pointed{
+      background: $text-gray-2 !important;
+    }
+  }
+  }
+
+  & .multiselect-tags {
+    color: orange;
+    margin-top: 0;
+    padding: 0.55rem 0.75rem;
+
+
+
+    & .multiselect-tag {
+      margin-bottom: 3px;
+      & .multiselect-tag-wrapper {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
+}
