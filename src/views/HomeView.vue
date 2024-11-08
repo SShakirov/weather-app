@@ -19,7 +19,15 @@
           text="Current forecast"
           type="label"
           subtype="label-black"
-          href="/tasks"
+          href="/"
+        />
+
+        <ButtonStyled
+          class="text-decoration-none"
+          text="History"
+          type="label"
+          subtype="label-black"
+          href="/history"
         />
       </div>
     </div>

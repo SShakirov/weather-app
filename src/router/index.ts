@@ -11,6 +11,11 @@ const routes = [
         path: '/',
         component: () => import('@/modules/forecastModule/components/WeatherForecast.vue')
       },
+
+      {
+        path: '/history',
+        component: () => import('@/modules/forecastModule/components/WeatherHistory.vue')
+      },
     ]
   },
   {
