@@ -71,9 +71,9 @@
             <div>
               <span
                 v-if="props.isLoading"
-                class="spinner-border spinner-border align-middle" style='width: 100px; height:100px'
+                class="spinner-border spinner-border align-middle" style='width: 64px; height:64px'
               ></span>
-              <img v-else :src="props.condition.icon" width="100px" height='100px' alt="" />
+              <img v-else :src="props.condition.icon" width="64px" height='64px' alt="" />
             </div>
           </div>
         </div>
