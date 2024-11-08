@@ -8,14 +8,16 @@
  * Вид вывода определяется по языку браузера пользователя
  */
 
+import moment from "moment"
+
 export const formatDate = (date: Date, options?: Intl.DateTimeFormatOptions) => {
   const userLocale = navigator.language
   return date.toLocaleDateString(userLocale, options)
 }
 
-export const formatDateFromString = (dateString: string, options?: Intl.DateTimeFormatOptions) => {
-  const date = new Date(dateString)
-  return formatDate(date, options)
+export const formatDateFromString = (dateString: string, format: string) => {
+  const d = new Date(dateString)
+  return  moment(d).format(format)
 }
 
 /**

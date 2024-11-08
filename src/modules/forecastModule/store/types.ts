@@ -16,6 +16,8 @@ export interface ICurrentForecast{
   condition: IForecastCondition
   temp_c: number
   humidity: number
+  wind_kph: number
+  last_updated: string
 }
 export interface IForecast {
   forecastday: IForecastDay[]
@@ -28,6 +30,7 @@ export interface IForecastDayData {
   condition: IForecastCondition
   avghumidity: number
   avgtemp_c: number
+  maxwind_kph: number
 }
 
 export interface IForecastCondition {

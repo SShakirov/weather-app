@@ -13,7 +13,6 @@ import PushNotificationGroup from "@/modules/pushNotifications/components/PushNo
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "bootstrap";
 @import "@vueform/multiselect/themes/default.css";
-@import "bootstrap-icons/font/bootstrap-icons.css";
 body {
   width: 100vw;
   height: 100vh;
