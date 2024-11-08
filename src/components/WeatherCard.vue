@@ -1,7 +1,7 @@
 <template>
   <div class="row d-flex justify-content-center py-5">
     <div class="col-md-8 col-lg-6 col-xl-5">
-      <div class="card text-body" style="border-radius: 35px">
+      <div class="card text-body rounded-5">
         <div class="card-body p-4">
           <div class="d-flex">
             <h6 class="flex-grow-1">
@@ -29,7 +29,7 @@
               ></span
               ><span v-else>{{ getTemperatureString }}</span>
             </h6>
-            <span class="small" style="color: #868b94"
+            <span class="small text-secondary"
               ><span
                 v-if="props.isLoading"
                 class="spinner-border spinner-border-sm align-middle ms-2"
@@ -41,7 +41,7 @@
           <div class="d-flex align-items-center">
             <div class="flex-grow-1" style="font-size: 1rem">
               <div>
-                <FontAwesomeIcon :icon="faWind" class="fa-fw" style="color: #868b94" />
+                <FontAwesomeIcon :icon="faWind" class="fa-fw text-secondary" />
                 <span class="ms-1">
                   <span
                     v-if="props.isLoading"
@@ -52,7 +52,7 @@
               </div>
 
               <div>
-                <FontAwesomeIcon :icon="faTint" class="fa-fw" style="color: #868b94" />
+                <FontAwesomeIcon :icon="faTint" class="fa-fw text-secondary" />
                 <span class="ms-1">
                   <span
                     v-if="props.isLoading"
@@ -63,7 +63,7 @@
               </div>
 
               <!-- <div>
-                <FontAwesomeIcon :icon="faSun" class="fa-fw" style="color: #868b94" />
+                <FontAwesomeIcon :icon="faSun" class="fa-fw text-secondary" />
                 <span class="ms-1 "> 0.2h </span>
               </div> -->
             </div>
