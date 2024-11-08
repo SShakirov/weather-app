@@ -6,8 +6,8 @@
           <span
             v-if="props.isLoading"
             class="spinner-border spinner-border-sm align-middle ms-2"
-          ></span
-          ><span v-else>{{ props.location }}</span>
+          ></span>
+          <LabelComponent v-else :text="props.location" :font-size="16" />
         </h6>
 
         <h6>
@@ -15,7 +15,7 @@
             v-if="props.isLoading"
             class="spinner-border spinner-border-sm align-middle ms-2"
           ></span>
-          <span v-else>{{ props.time }}</span>
+          <LabelComponent v-else :text="props.time" :font-size="16" />
         </h6>
       </div>
 
@@ -24,16 +24,16 @@
           <span
             v-if="props.isLoading"
             class="spinner-border spinner-border-sm align-middle ms-2"
-          ></span
-          ><span v-else>{{ getTemperatureString }}</span>
+          ></span>
+          <LabelComponent v-else :text="getTemperatureString" :font-size="48" />
         </h6>
         <span class="small text-secondary"
           ><span
             v-if="props.isLoading"
             class="spinner-border spinner-border-sm align-middle ms-2"
-          ></span
-          ><span v-else>{{ props.condition.text }}</span></span
-        >
+          ></span>
+          <LabelComponent v-else :text="props.condition.text" class="small text-secondary" />
+        </span>
       </div>
 
       <div class="d-flex align-items-center">
@@ -45,7 +45,12 @@
                 v-if="props.isLoading"
                 class="spinner-border spinner-border-sm align-middle ms-2"
               ></span>
-              <span v-else>{{ getWindSpeedString }}</span>
+              <LabelComponent
+                v-else
+                :text="getWindSpeedString"
+                class="text-secondary"
+                :font-size="16"
+              />
             </span>
           </div>
 
@@ -55,8 +60,13 @@
               <span
                 v-if="props.isLoading"
                 class="spinner-border spinner-border-sm align-middle ms-2"
-              ></span
-              ><span v-else>{{ getHumidityString }}</span>
+              ></span>
+              <LabelComponent
+                v-else
+                :text="getHumidityString"
+                class="text-secondary"
+                :font-size="16"
+              />
             </span>
           </div>
 
@@ -86,6 +96,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { computed } from 'vue'
 
 import type { IForecastCondition } from '@/modules/forecastModule/store/types'
+
+import LabelComponent from '@/UI/components/LabelComponent.vue'
 
 interface IProps {
   humidity: number
