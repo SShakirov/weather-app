@@ -12,6 +12,9 @@ export default defineConfig(({ mode }) => {
         '@': fileURLToPath(new URL('./src', import.meta.url))
       }
     },
+    preview: {
+      port: 8080,
+    },
     server: {
       port: 8080,
       proxy: {

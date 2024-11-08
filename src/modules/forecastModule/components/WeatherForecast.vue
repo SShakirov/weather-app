@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 import { useForecastStore } from '@/modules/forecastModule/store'
 import type { ICurrentForecast } from '@/modules/forecastModule/store/types'
@@ -43,6 +43,10 @@ watch(
   async () => {
     currentForecast.value = await forecastStore.getWeatherForecast()
   },
-  { deep: true, immediate: true }
+  { deep: true }
 )
+
+onMounted(async() => {
+  currentForecast.value = await forecastStore.getWeatherForecast()
+})
 </script>

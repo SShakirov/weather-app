@@ -30,7 +30,8 @@ export const useForecastStore = defineStore('forecast', () => {
 
   const getIsLoading = computed(() => isLoading.value)
 
-  async function getWeatherForecast(): Promise<ICurrentForecast> {
+  async function getWeatherForecast(): Promise<ICurrentForecast | undefined> {  
+    if (!selectedCityOptions.value[0]?.data) return;
     isLoading.value = true
     const params = {
       q: selectedCityOptions.value[0].data
@@ -42,6 +43,7 @@ export const useForecastStore = defineStore('forecast', () => {
   }
 
   async function getWeatherHistory(): Promise<IForecastDay[]> {
+    if (!selectedCityOptions.value[0]?.data) return [];
     isLoading.value = true
     const responses: IHistoryResponse[] = []
     const dates = getLastWeekDates()
