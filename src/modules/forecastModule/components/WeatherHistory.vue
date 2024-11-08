@@ -2,7 +2,9 @@
   <div class="row d-flex justify-content-center py-5">
     <div class="col-md-11 col-lg-10 col-xl-8">
       <div class="card-grid-container gap-3">
-        <div class="card-grid-item history-card" v-for="item in history" :key="item.date">
+        <TransitionGroup name="fade-slide"> 
+        <div class="card-grid-item history-card" v-for="item in history" 
+            :key="item.date + forecastStore.selectedCityOptions[0].text">
           <WeatherCard
             :condition="item.day.condition"
             :humidity="item.day.avghumidity"
@@ -13,6 +15,7 @@
             :isLoading="forecastStore.getIsLoading"
           ></WeatherCard>
         </div>
+      </TransitionGroup>
       </div>
     </div>
   </div>
@@ -45,7 +48,6 @@ watch(
 }
 
 .card-grid-item {
-    text-align: center; 
     grid-column: span 3
 }
 

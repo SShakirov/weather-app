@@ -2,6 +2,7 @@
   <div class="">
     <div class="row d-flex justify-content-center py-5">
       <div class="col-md-8 col-lg-6 col-xl-5">
+        <Transition name="fade-slide-v">
         <WeatherCard
           v-if="currentForecast"
           :condition="currentForecast.condition"
@@ -12,6 +13,7 @@
           :location="forecastStore.selectedCityOptions[0].text"
           :isLoading="forecastStore.getIsLoading"
         ></WeatherCard>
+      </Transition>
       </div>
     </div>
   </div>
