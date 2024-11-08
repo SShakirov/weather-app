@@ -4,36 +4,76 @@
       <div class="card text-body" style="border-radius: 35px">
         <div class="card-body p-4">
           <div class="d-flex">
-            <h6 class="flex-grow-1">{{ props.location }}</h6>
+            <h6 class="flex-grow-1">
+              <span
+                v-if="props.isLoading"
+                class="spinner-border spinner-border-sm align-middle ms-2"
+              ></span
+              ><span v-else>{{ props.location }}</span>
+            </h6>
 
-            <h6>{{ props.time}}</h6>
+            <h6>
+              <span
+                v-if="props.isLoading"
+                class="spinner-border spinner-border-sm align-middle ms-2"
+              ></span>
+              <span v-else>{{ props.time }}</span>
+            </h6>
           </div>
 
           <div class="d-flex flex-column text-center mt-5 mb-4">
-            <h6 class="display-4 mb-0 font-weight-bold">{{ getTemperatureString }}</h6>
-            <span class="small" style="color: #868b94">{{ props.condition.text }}</span>
+            <h6 class="display-4 mb-0 font-weight-bold">
+              <span
+                v-if="props.isLoading"
+                class="spinner-border spinner-border-sm align-middle ms-2"
+              ></span
+              ><span v-else>{{ getTemperatureString }}</span>
+            </h6>
+            <span class="small" style="color: #868b94"
+              ><span
+                v-if="props.isLoading"
+                class="spinner-border spinner-border-sm align-middle ms-2"
+              ></span
+              ><span v-else>{{ props.condition.text }}</span></span
+            >
           </div>
 
           <div class="d-flex align-items-center">
             <div class="flex-grow-1" style="font-size: 1rem">
               <div>
                 <FontAwesomeIcon :icon="faWind" class="fa-fw" style="color: #868b94" />
-                <span class="ms-1"> {{ getWindSpeedString }} </span>
+                <span class="ms-1">
+                  <span
+                    v-if="props.isLoading"
+                    class="spinner-border spinner-border-sm align-middle ms-2"
+                  ></span>
+                  <span v-else>{{ getWindSpeedString }}</span>
+                </span>
               </div>
 
               <div>
                 <FontAwesomeIcon :icon="faTint" class="fa-fw" style="color: #868b94" />
-                <span class="ms-1"> {{ getHumidityString }} </span>
+                <span class="ms-1">
+                  <span
+                    v-if="props.isLoading"
+                    class="spinner-border spinner-border-sm align-middle ms-2"
+                  ></span
+                  ><span v-else>{{ getHumidityString }}</span>
+                </span>
               </div>
 
               <!-- <div>
                 <FontAwesomeIcon :icon="faSun" class="fa-fw" style="color: #868b94" />
-                <span class="ms-1"> 0.2h </span>
+                <span class="ms-1 "> 0.2h </span>
               </div> -->
             </div>
 
             <div>
-              <img :src="props.condition.icon" width="100px" alt=''/>
+              <span
+                v-if="props.isLoading"
+                class="spinner-border spinner-border align-middle" style='width: 100px; height:100px'
+              ></span>
+              <img v-else :src="props.condition.icon" width="100px" height='100px' alt="" />
             </div>
           </div>
         </div>
@@ -57,14 +97,14 @@ interface IProps {
   temperature: number
   time: string
   location: string
+  isLoading: boolean
 }
 
 const props = defineProps<IProps>()
 
+const getWindSpeedString = computed(() => props.windSpeed + ' kph')
 
-const getWindSpeedString = computed(() => props.windSpeed + " kph")
+const getHumidityString = computed(() => props.humidity + ' %')
 
-const getHumidityString = computed(() => props.humidity + " %")
-
-const getTemperatureString = computed(() => props.temperature + " °C")
+const getTemperatureString = computed(() => props.temperature + ' °C')
 </script>

@@ -97,7 +97,7 @@ import LabelStyled from "@/UI/components_styled/LabelStyled.vue";
 
 export interface ISelectOptionItem<T> {
   id: string;
-  text?: string;
+  text: string;
   data: T;
   imageUrl?: string;
 }

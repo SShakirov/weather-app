@@ -1,8 +1,15 @@
 import _ from 'lodash'
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
-import type { ICurrentForecast, ICurrentResponse, IForecastDay, IHistoryResponse, IWeatherResponse } from '@/modules/forecastModule/store/types'
+import type {
+  ICurrentForecast,
+  ICurrentResponse,
+  IForecastDay,
+  IHistoryResponse
+} from '@/modules/forecastModule/store/types'
+
+import type { ISelectOptionItem } from '@/UI/components/SelectComponent.vue'
 
 import { baseUrls } from '@/shared/api'
 import { getLastWeekDates } from '@/shared/helpers/format'
@@ -19,10 +26,14 @@ const requests = useRequest()
 export const useForecastStore = defineStore('forecast', () => {
   const isLoading = ref(false)
 
-  async function getWeatherForecast(city: string): Promise<ICurrentForecast> {
+  const selectedCityOptions = ref<ISelectOptionItem<string>[]>([])
+
+  const getIsLoading = computed(() => isLoading.value)
+
+  async function getWeatherForecast(): Promise<ICurrentForecast> {
     isLoading.value = true
     const params = {
-      q: city
+      q: selectedCityOptions.value[0].data
     }
     const url = baseUrls.weather + urls.forecast + '?' + serializeFromObjectToQueryString(params)
     const response: ICurrentResponse = await requests.get(url)
@@ -30,13 +41,13 @@ export const useForecastStore = defineStore('forecast', () => {
     return response.current
   }
 
-  async function getWeatherHistory(city: string): Promise<IForecastDay[]> {
+  async function getWeatherHistory(): Promise<IForecastDay[]> {
     isLoading.value = true
     const responses: IHistoryResponse[] = []
     const dates = getLastWeekDates()
     const promises = dates.map((date) => {
       const params = {
-        q: city,
+        q: selectedCityOptions.value[0].data,
         dt: date
       }
       const url = baseUrls.weather + urls.history + '?' + serializeFromObjectToQueryString(params)
@@ -54,7 +65,9 @@ export const useForecastStore = defineStore('forecast', () => {
   }
 
   return {
-    isLoading,
+    getIsLoading,
+    selectedCityOptions,
+
     getWeatherForecast,
     getWeatherHistory
   }

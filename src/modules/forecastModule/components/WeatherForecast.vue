@@ -7,13 +7,14 @@
       :time="formatTime()"
       :windSpeed='currentForecast.wind_kph'
       :temperature='currentForecast.temp_c'
-      location='Kazan'
+      :location='forecastStore.selectedCityOptions[0].text'
+      :isLoading='forecastStore.getIsLoading'
     ></WeatherCard>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, ref } from 'vue'
+import {ref, watch } from 'vue'
 
 import { useForecastStore } from '@/modules/forecastModule/store'
 import type { ICurrentForecast } from '@/modules/forecastModule/store/types'
@@ -30,7 +31,8 @@ function formatTime(){
   if (!currentForecast.value) return ""
   return "Last updated " + formatDateFromString(currentForecast.value.last_updated, 'HH:mm')
 }
-onBeforeMount(async () => {
-  currentForecast.value = await forecastStore.getWeatherForecast('Kazan')
-})
+
+watch(() => forecastStore.selectedCityOptions, async () => {
+  currentForecast.value = await forecastStore.getWeatherForecast()
+}, {deep: true})
 </script>
